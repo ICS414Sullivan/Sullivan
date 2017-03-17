@@ -5,6 +5,7 @@ public class Main {
 	public static void main(String[] args){
 		EZ.initialize(800, 600);
 		EZ.addImage("tofrom.png", 400, 292);
+		EZImage angles = EZ.addImage("angles.png", 400, 300);
 		EZImage plane = EZ.addImage("plane_transparent.png", 300, 300);
 		EZCircle station = EZ.addCircle(400, 300, 50, 50, Color.black, false);
 		EZCircle dot = EZ.addCircle(400, 300, 7, 7, Color.black, true);
@@ -13,10 +14,14 @@ public class Main {
 		EZText display = EZ.addText(400, 310, "", Color.RED);
 		EZText good = EZ.addText(20, 20, "", Color.BLACK);
 		EZLine line = EZ.addLine(400, 300, 300, 300, Color.RED);
+		EZLine lattitude = EZ.addLine(400, 600, 400, 800, Color.WHITE);
+		//EZLine longitude = EZ.addLine(800, 300, x2, y2, c);
 		
 		while(true){
-			clickX = EZInteraction.getXMouse();
-			clickY = EZInteraction.getYMouse();	
+			if(EZInteraction.isMouseLeftButtonDown()){
+				clickX = EZInteraction.getXMouse();
+				clickY = EZInteraction.getYMouse();	
+			}
 			boolean signal = goodBadSignal(clickX, clickY);
 			if (signal == true)
 				{
@@ -43,7 +48,7 @@ public class Main {
 	static double calculateAngle(int x, int y){
 		double cos = x-400;
 		double sin = 300-y;
-		double angle = (Math.atan2(sin,cos)*360/3.14159265)/2;
+		double angle = (Math.atan2(cos,sin)*360/3.14159265)/2;
 		if(angle < 0){
 			return 360+angle;
 		} else {
