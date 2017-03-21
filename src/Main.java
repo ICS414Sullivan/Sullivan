@@ -5,14 +5,25 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 
+
 public class Main {
 
+	static int toFromY = 270;
+	static int toFromX = 90;
+	static double angle = 0;
+	static int scanned = 0;
+	static int radialX = 0;
+	static int radialY = 180;
+	
 	public static void main(String[] args){
 		EZ.initialize(800, 600);
-		EZ.addImage("tofrom.png", 340, 292);
+		EZImage background = EZ.addImage("tofrom.png", 340, 292);
 		EZImage angles = EZ.addImage("angles.png", 400, 300);
 		angles.scaleTo(.5);
-		EZImage radial = EZ.addImage("radial.png", 680, 500);
+		//EZImage radial = EZ.addImage("radial.png", 680, 500);
+		//EZImage toTri = EZ.addImage("tofrotri.png", 725, 484);
+		//EZImage froTri = EZ.addImage("tofrotri.png", 725, 513);
+		//froTri.rotateBy(180);
 		//radial.scaleTo(.45);
 		EZImage plane = EZ.addImage("plane_transparent.png", 300, 300);
 		EZCircle station = EZ.addCircle(400, 300, 50, 50, Color.black, false);
@@ -22,35 +33,36 @@ public class Main {
 		EZText display = EZ.addText(415, 310, "", Color.RED);
 		EZText good = EZ.addText(20, 20, "", Color.BLACK);
 		EZLine line = EZ.addLine(400, 300, 300, 300, Color.RED);
-		//EZLine lattitude = EZ.addLine(400, 0, 400, 800, Color.WHITE);
-		//EZLine longitude = EZ.addLine(800, 300, 0, 300, Color.GRAY);
+		EZLine lattitude = EZ.addLine(800, 300, 0, 300, Color.WHITE);
+		lattitude.rotateBy(90);
+		EZLine longitude = EZ.addLine(800, 300, 0, 300, Color.GRAY);
 		EZText follow = EZ.addText(clickX-5, clickY-5, "", Color.RED);
-		EZRectangle toFr = EZ.addRectangle(400, 0, 800, 600, Color.GRAY, false);
-		EZRectangle voRadial = EZ.addRectangle(0, 0, 800, 1200, Color.WHITE, false);
+		//EZRectangle toFr = EZ.addRectangle(400, 450, 800, 300, Color.GRAY, false);
+		//EZRectangle voRadial = EZ.addRectangle(0, 0, 500, 1200, Color.WHITE, false);
+		EZImage radial = EZ.addImage("radial.png", 680, 500);
+		EZLine radialLine = EZ.addLine(685, 448, 685, 543, Color.RED);
 		EZRectangle hideGS = EZ.addRectangle(662, 482, 30, 26, Color.BLACK, true);
+		EZImage toTri = EZ.addImage("tofrotri.png", 725, 484);
+		EZImage froTri = EZ.addImage("tofrotri.png", 725, 513);
+		froTri.rotateBy(180);
 		EZRectangle hideNAV = EZ.addRectangle(684, 556, 40, 20, Color.BLACK, true);
 		EZCircle detectOBS = EZ.addCircle(592, 577, 33, 33, Color.WHITE, false);
 		Scanner scanner = new Scanner(new InputStreamReader(System.in));
-		int scanned = 0;
 		
 		while(true){
 			if(EZInteraction.isMouseLeftButtonDown()){
 				clickX = EZInteraction.getXMouse();
 				clickY = EZInteraction.getYMouse();	
-				//System.out.println(clickX+"~~~~~X");
-				//System.out.println(clickY);
+				System.out.println(clickX+"~~~~~X");
+				System.out.println(clickY);
 			}
 			boolean signal = goodBadSignal(clickX, clickY);
 			if (signal == true)
 				{
 					hideGS.hide();
 					display.show();
-				//	good.color = Color.BLACK;
-				//	good.msg = "GOOD!";
 				} else {
 					hideGS.show();
-				//	good.color = Color.red;
-				//	good.msg = "BAD!";
 					display.hide();
 				}
 			if(EZInteraction.wasMouseLeftButtonPressed() || EZInteraction.isMouseLeftButtonDown()){
@@ -65,28 +77,57 @@ public class Main {
 			                System.out.println("Invalid input, please input an integer greater than 0");
 			                String trash = scanner.nextLine();
 			            }
-					}
-				if(dot.isPointInElement(clickX, clickY) == true){
-					hideNAV.hide();
-				} else {
-					hideNAV.show();
-				}
+					//System.out.println(scanned+"~~~~~");
+					lattitude.rotateBy(scanned);
+					longitude.rotateBy(scanned);
+					//background.rotateBy(scanned);
+					toFromY += scanned;
+					toFromX += scanned;
+					toFromX = toFromX%360;
+					toFromY = toFromY%360;
+				  }
 				plane.translateTo(clickX, clickY);
 				line.setPoint2(clickX, clickY);
 				double angle = Math.floor(calculateAngle(clickX, clickY));
 				String displayangle = String.valueOf(angle);
 				display.msg = displayangle;
-				//display.xCenter = clickX;
-				//display.yCenter = clickY;
+				if(angle > toFromY || angle < toFromX){
+					//System.out.println(toFromY+"~~Y");
+					//System.out.println(toFromX+"~~X");
+					toTri.show();
+					froTri.hide();
+				} else if(angle < toFromY || angle > toFromX) {
+					froTri.show();
+					toTri.hide();
+				}
+				if(dot.isPointInElement(clickX, clickY) == true){
+					toTri.hide();
+					froTri.hide();
+					hideNAV.hide();
+				} else {
+					hideNAV.show();
+				}
+				if(angle-radialX == 0){
+					radialLine.setPoint2(685, 543);
+				}
+				if(angle-radialX == 1){
+					radialLine.setPoint2(692, 539);
+				}
+				if(angle-radialX == 2){
+					radialLine.setPoint2(705,531);
+				}
+				if(angle-radialX == 3){
+					radialLine.setPoint2(714,536);
+				}
 			}
 			EZ.refreshScreen();
-		}
 	}
+}
 	
 	static double calculateAngle(int x, int y){
 		double cos = x-400;
 		double sin = 300-y;
-		double angle = (Math.atan2(cos,sin)*360/3.14159265)/2;
+		angle = (Math.atan2(cos,sin)*360/3.14159265)/2;
 		if(angle < 0){
 			return 360+angle;
 		} else {
@@ -114,5 +155,10 @@ public class Main {
 		System.out.println();
 	}
 	
-	//static int toFrom(){
+	static int toFrom(int planeangle){
+		if(planeangle > toFromY){
+			return 2;
+		}
+		return 5;
+	}
 }
