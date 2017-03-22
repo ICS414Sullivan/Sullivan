@@ -27,3 +27,6 @@ We will be using github to host our project. The repository/organization of whic
 Total effort to-date: Steven Braun: 3 hours (12, 15-minute increments)
 		         Jipeng Huang : 3 hours (12, 15-minute increments)
 		         Anthony Kuloloia: 3 hours (12, 15-minute increments)
+
+
+ <p><img src="https://raw.githubusercontent.com/ICS414Sullivan/Sullivan" alt="Landing "></p>
