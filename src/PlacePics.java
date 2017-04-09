@@ -1,5 +1,3 @@
-package vor;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,7 +7,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 
 //places our images onto the window we created in the app method
-public class Display extends JPanel implements KeyListener, RadioListener {
+public class PlacePics extends JPanel implements KeyListener, RadList {
 
     private VOR vor;
 
@@ -53,16 +51,16 @@ public class Display extends JPanel implements KeyListener, RadioListener {
         this.repaint();
     }
     
-    public Display() {
+    public PlacePics() {
         vor = new VOR();
-        vor.radioListener(this);
+        incomingData();
         Resources.loadImages(new String[]{"base", "obs", "wheel", "to", "from", "good", "bad", "font"});
         addKeyListener(this);
         setFocusable(true);
         requestFocusInWindow();
     }
 
-    @Override
+    //@Override
     public void incomingData() {
         this.repaint();
     }

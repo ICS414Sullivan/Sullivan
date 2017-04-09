@@ -1,5 +1,3 @@
-package vor;
-
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -7,7 +5,7 @@ import java.util.TimerTask;
 //radio method that handles everything specified by instructor
 public class Radio {
 	
-	private ArrayList<RadioListener> heyListen;
+	private ArrayList<RadList> heyListen;
 	
 	protected int radial;
 	protected String stationID;
@@ -25,8 +23,8 @@ public class Radio {
 
 				@Override
 				public void run() {
-					if (Utils.randomInt(0, 3) == 0) {
-						radial = Utils.normalizeAngle(radial + Utils.randomInt(-2, 2));
+					if (Functions.randomInt(0, 3) == 0) {
+						radial = Functions.normalizeAngle(radial + Functions.randomInt(-2, 2));
 					}
 					overStation();
 					
@@ -36,7 +34,7 @@ public class Radio {
 		}
 	}
 	
-	public void addListener(RadioListener listener) {
+	public void addListener(RadList listener) {
         heyListen.add(listener);
     }
 	
@@ -48,17 +46,17 @@ public class Radio {
 	}
 	
 	private void notifyListeners() {
-		for (RadioListener listener : heyListen) {
+		for (RadList listener : heyListen) {
         	listener.incomingData();
         }
 	}
 	
 	private void radial() {
-		this.radial = Utils.randomInt(0, 359);
+		this.radial = Functions.randomInt(0, 359);
 	}
 	
 	private void overStation() {
-		this.overStation = (Utils.randomInt(0, 19) == 0);
+		this.overStation = (Functions.randomInt(0, 19) == 0);
 	}
 	
 	public int getRadial() {

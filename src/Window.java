@@ -1,11 +1,6 @@
-//needed to run in netbeans
-package vor;
-
 import javax.swing.AbstractAction;
 import java.awt.event.WindowEvent;
 import javax.swing.Action;
-import java.awt.Color;
-import java.awt.GridLayout;
 import javax.swing.JFrame;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
@@ -13,28 +8,25 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import java.awt.event.KeyEvent;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
 import java.awt.Toolkit;
 import javax.swing.KeyStroke;
 
 //create window for application
-public class App {
+public class Window {
 
     public static final String APP = "VOR";
     private JFrame frame;
-    private Display display;
+    private PlacePics placePics;
 
-    public App() {
-        display = new Display();
+    public Window() {
+        placePics = new PlacePics();
         frame();
     }
 
     private void frame() {
         frame = new JFrame(APP);
-        frame.add(display);
+        frame.add(placePics);
         menuBar();
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -76,7 +68,7 @@ public class App {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new App();
+                new Window();
             }
         });
     }

@@ -1,6 +1,4 @@
-package vor;
-
-public class Utils {
+public class Functions {
 	
 	//keep angle between -180 and +180
 	public static int normalizeAngle(int angle, int center) {
