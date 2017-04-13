@@ -29,4 +29,4 @@ Total effort to-date: Steven Braun: 3 hours (12, 15-minute increments)
 		         Anthony Kuloloia: 3 hours (12, 15-minute increments)
 
 
- <p><img src="https://raw.githubusercontent.com/ICS414Sullivan/Sullivan/master/tester.png"></p>
+
