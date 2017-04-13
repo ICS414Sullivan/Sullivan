@@ -1,3 +1,5 @@
+<p><img src="https://raw.githubusercontent.com/ICS414Sullivan/Sullivan/master/tester.png"></p>
+
 Sullivan
 Actual LOC to-date: 0 LOC
 Requirements
